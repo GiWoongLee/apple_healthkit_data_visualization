@@ -1,31 +1,74 @@
 from numpy import *
-from re import *
+from xml.etree import ElementTree
+from pandas import *
 
-# raw data 파일을 읽어들여 Matrix 결과값으로 return해주는 함수
-def rawToMatrix(filePath):
-    f = open(filePath,'r')
-    for line in f:
-        extractRelevantData(line)
-    f.close()
-    return 0
+import re
+import sys
 
+PREFIX_RE = re.compile('^HK.*TypeIdentifier(.+)$')
 
-# file을 읽어들인 정보를 적정한 객체에 저장해주는 함수
-def extractRelevantData(rawData):
-    parseFileLine(rawData)
-    # 결과값을 받아서 객체에 저장하는 코드
-    return 0
-
-# 정규표현식을 활용해서 parsing해주는 해서 필요한 정보를 return해주는 함수
-def parseFileLine(rawData):
-    return 0
+def abbreviate(s):
+    m = re.match(PREFIX_RE,s)
+    return m.group(1) if m else s
 
 
-# Matrix에 관련 정보를 추가하는 함수
-def addDataToMatrx(matrix,data):
-    # return matrix.append(matrix,np.)
-    return 0
+class HealthDataExtractor(object):
 
-# 새로운 Matrix를 만드는 함수
-def createNewMatrix(rowNum,colNum):
-    return np.empty([rowNum,colNum],dtype=float)
+    def __init__(self,path):
+        self.in_path = path
+        self.parseXML()
+        self.intializeMatrix()
+        self.extractRelevantData()
+        self.makeMatrix()
+
+    def intializeMatrix(self):
+        self.dataTypes = ['stepCount', 'distanceWalking', 'stairsClimbing', 'sleepAnalysis']
+        self.stepCount = []
+        self.stepCountMetaData = {'info': ['value', 'startDate', 'endDate'], 'unit': 'count'}
+        self.distanceWalking = []
+        self.distanceWalkingMetaData = {'info': ['value', 'startDate', 'endDate'], 'unit': 'km'}
+        self.stairsClimbing = []
+        self.stairsClimbingMetaData = {'info': ['value', 'startDate', 'endDate'], 'unit': 'count'}
+        self.sleepAnalysis = []
+        self.sleepAnalysisMetaData = {'info': ['startDate', 'endDate'], 'unit': 'datetime'}
+
+    def parseXML(self):
+        with open(self.in_path) as f:
+            self.report('Reading data from %s...'%self.in_path)
+            self.data = ElementTree.parse(f)
+            self.report('done')
+        f.close()
+        self.root = self.data.getroot()
+
+    def report(self,msg):
+        print(msg)
+        sys.stdout.flush()
+
+    def extractRelevantData(self):
+        for child in self.root:
+            if child.tag == 'Record':
+                if 'type' in child.attrib:
+                    dataType = abbreviate(child.attrib['type'])
+                    if dataType == 'StepCount':
+                        self.stepCount.append([child.attrib['value'],child.attrib['startDate'],child.attrib['endDate']])
+                    elif dataType == 'DistanceWalkingRunning':
+                        self.distanceWalking.append([child.attrib['value'],child.attrib['startDate'],child.attrib['endDate']])
+                    elif dataType == 'FlightsClimbed':
+                        self.stairsClimbing.append([child.attrib['value'],child.attrib['startDate'],child.attrib['endDate']])
+                    elif dataType == 'SleepAnalysis':
+                        self.sleepAnalysis.append([child.attrib['startDate'],child.attrib['endDate']])
+                    else:
+                        pass
+
+    def makeMatrix(self):
+        print DataFrame(self.stepCount)
+        print DataFrame(self.distanceWalking)
+        print DataFrame(self.stairsClimbing)
+        print DataFrame(self.sleepAnalysis)
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('USAGE: python rawDataToMatrix.py /path/to/datum.xml')
+        sys.exit(1)
+    data = HealthDataExtractor(sys.argv[1])
+
