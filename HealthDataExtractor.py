@@ -1,6 +1,7 @@
 from numpy import *
 from xml.etree import ElementTree
 from pandas import *
+import DataProcessor
 
 import re
 import sys
@@ -25,27 +26,51 @@ class HealthDataExtractor(object):
         return self.dataBundle[key]
 
     def intializeMatrix(self):
-        self.dataTypes = ['stepCount', 'distanceWalking', 'stairsClimbing', 'sleepAnalysis']
         self.stepCount = []
-        self.stepCountMetaData = {'info': ['value', 'startDate', 'endDate'], 'unit': 'count'}
         self.distanceWalking = []
-        self.distanceWalkingMetaData = {'info': ['value', 'startDate', 'endDate'], 'unit': 'km'}
         self.stairsClimbing = []
-        self.stairsClimbingMetaData = {'info': ['value', 'startDate', 'endDate'], 'unit': 'count'}
         self.sleepAnalysis = []
-        self.sleepAnalysisMetaData = {'info': ['startDate', 'endDate'], 'unit': 'datetime'}
+
+    def _report(self,msg):
+        print(msg)
+        sys.stdout.flush()
+
+    def _convertDataToDataFrame(self):
+        self.dataBundle = dict(map(lambda (key, value): (key, self._dataToDataFrame(key, value)), self.extractedData.iteritems()))
+
+    def _dataToDataFrame(self, key, value):
+        labels = self._getDataLabel(key)
+        return DataFrame.from_records(value, columns=labels)
+
+    def _getDataLabel(self, data):
+        return {
+            'stepCount': ['count', 'startDate', 'endDate'],
+            'distanceWalking': ['km', 'startDate', 'endDate'],
+            'stairsClimbing': ['count', 'startDate', 'endDate'],
+            'sleepAnalysis': ['startDate', 'endDate']
+        }[data]
+
+    def _modifyMatrixDataType(self):
+        self.dataBundle = dict(map(lambda (key, value): (key, self._modifyDataType(key, value)), self.dataBundle.iteritems()))
+
+    # convert count,km,count info to int type + startDate/endDate to datetime format
+    def _modifyDataType(self,key,value):
+        if(key != 'sleepAnalysis'):
+            if(key == 'distanceWalking'):
+                value['km'] = value['km'].astype('float64')
+            else:
+                value['count'] = value['count'].astype(int)
+        value['startDate'] = to_datetime(value['startDate'])
+        value['endDate'] = to_datetime(value['endDate'])
+        return value
 
     def parseXML(self):
         with open(self.in_path) as f:
-            self.report('Reading data from %s...'%self.in_path)
+            self._report('Reading data from %s...'%self.in_path)
             self.data = ElementTree.parse(f)
-            self.report('done')
+            self._report('done')
         f.close()
         self.root = self.data.getroot()
-
-    def report(self,msg):
-        print(msg)
-        sys.stdout.flush()
 
     def extractRelevantData(self):
         for child in self.root:
@@ -62,21 +87,20 @@ class HealthDataExtractor(object):
                         self.sleepAnalysis.append([child.attrib['startDate'],child.attrib['endDate']])
                     else:
                         pass
+        self.extractedData = {'stepCount':self.stepCount, 'distanceWalking':self.distanceWalking, 'stairsClimbing':self.stairsClimbing,'sleepAnalysis':self.sleepAnalysis}
 
     def makeMatrix(self):
-        self.stepCountDF = DataFrame(self.stepCount)
-        self.distanceWalkingDF = DataFrame(self.distanceWalking)
-        self.stairsClimbingDF = DataFrame(self.stairsClimbing)
-        self.sleepAnalysisDF = DataFrame(self.sleepAnalysis)
-        self.dataBundle = {'stepCountData':self.stepCountDF, 'distanceWalkingData':self.distanceWalkingDF, 'stairsClimbingData':self.stepCountDF,'sleepAnalysisData':self.sleepAnalysisDF}
+        self._convertDataToDataFrame()
+        self._modifyMatrixDataType()
 
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print('USAGE: python HealthDataExtractor.py /path/to/datum.xml')
         sys.exit(1)
-    data = HealthDataExtractor(sys.argv[1])
-
+    dataBundle = HealthDataExtractor(sys.argv[1]).dataBundle
+    print(dataBundle['distanceWalking'])
+    DataProcessor(dataBundle)
 
 
 # reference

@@ -1,12 +1,7 @@
 class DataProcessor(object):
 
-    def __init__(self):
+    def __init__(self,dataBundle):
         return 0
-    # labels = ['count', 'started_at', 'ended_at']
-    # self.stepCountDF = DataFrame.from_records(self.stepCount, columns=labels)
-    # self.stepCountDF['count'] = self.stepCountDF['count'].astype(int)
-    # self.stepCountDF['started_at'] = to_datetime(self.stepCountDF['started_at'])
-    # self.stepCountDF['ended_at'] = to_datetime(self.stepCountDF['ended_at'])
     # self.stepCountDF.index = self.stepCountDF['started_at']
     # self.stepCountDF = self.stepCountDF.drop('started_at', 1)
     # self.stepCountDF = self.stepCountDF.drop('ended_at', 1)

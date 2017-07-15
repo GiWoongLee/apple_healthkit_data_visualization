@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bbe5e79-bb59-4eec-bc51-074f907746bc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DataProcessor.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/processMatrix.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/rawDataToMatrix.py" afterPath="$PROJECT_DIR$/HealthDataExtractor.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/visualizeMatrix.py" afterPath="$PROJECT_DIR$/visualizeMatrix.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataProcessor.py" afterPath="$PROJECT_DIR$/DataProcessor.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HealthDataExtractor.py" afterPath="$PROJECT_DIR$/HealthDataExtractor.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,8 +21,8 @@
       <file leaf-file-name="HealthDataExtractor.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/HealthDataExtractor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1200">
-              <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+            <state relative-caret-position="482">
+              <caret line="38" column="130" lean-forward="true" selection-start-line="37" selection-start-column="4" selection-end-line="38" selection-end-column="130" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -34,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataProcessor.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataProcessor.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataProcessor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="59" lean-forward="false" selection-start-line="10" selection-start-column="59" selection-end-line="10" selection-end-column="59" />
+            <state relative-caret-position="45">
+              <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -54,7 +50,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="visualizeMatrix.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="visualizeMatrix.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/visualizeMatrix.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
@@ -78,6 +74,8 @@
       <find>getChildren</find>
       <find>node</find>
       <find>nod</find>
+      <find>report</find>
+      <find>distanceWalking</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -91,14 +89,15 @@
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/processMatrix.py" />
         <option value="$PROJECT_DIR$/rawDataToMatrix.py" />
-        <option value="$PROJECT_DIR$/DataProcessor.py" />
         <option value="$PROJECT_DIR$/visualizeMatrix.py" />
+        <option value="$PROJECT_DIR$/HealthDataExtractor.py" />
+        <option value="$PROJECT_DIR$/DataProcessor.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="519" />
-    <option name="y" value="31" />
+    <option name="x" value="451" />
+    <option name="y" value="23" />
     <option name="width" value="992" />
     <option name="height" value="973" />
   </component>
@@ -245,7 +244,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="519" y="31" width="992" height="973" extended-state="0" />
+    <frame x="451" y="23" width="992" height="973" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3205645" sideWeight="0.49651048" order="0" side_tool="false" content_ui="combo" />
@@ -361,24 +360,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/HealthDataExtractor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="80" column="0" lean-forward="true" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="59" lean-forward="false" selection-start-line="10" selection-start-column="59" selection-end-line="10" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/consts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -391,6 +372,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HealthDataExtractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="38" column="130" lean-forward="true" selection-start-line="37" selection-start-column="4" selection-end-line="38" selection-end-column="130" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataProcessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
           <folding />
         </state>
       </provider>
