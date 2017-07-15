@@ -21,6 +21,9 @@ class HealthDataExtractor(object):
         self.extractRelevantData()
         self.makeMatrix()
 
+    def __getitem__(self, key):
+        return self.dataBundle[key]
+
     def intializeMatrix(self):
         self.dataTypes = ['stepCount', 'distanceWalking', 'stairsClimbing', 'sleepAnalysis']
         self.stepCount = []
@@ -61,14 +64,22 @@ class HealthDataExtractor(object):
                         pass
 
     def makeMatrix(self):
-        print DataFrame(self.stepCount)
-        print DataFrame(self.distanceWalking)
-        print DataFrame(self.stairsClimbing)
-        print DataFrame(self.sleepAnalysis)
+        self.stepCountDF = DataFrame(self.stepCount)
+        self.distanceWalkingDF = DataFrame(self.distanceWalking)
+        self.stairsClimbingDF = DataFrame(self.stairsClimbing)
+        self.sleepAnalysisDF = DataFrame(self.sleepAnalysis)
+        self.dataBundle = {'stepCountData':self.stepCountDF, 'distanceWalkingData':self.distanceWalkingDF, 'stairsClimbingData':self.stepCountDF,'sleepAnalysisData':self.sleepAnalysisDF}
+
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print('USAGE: python rawDataToMatrix.py /path/to/datum.xml')
+        print('USAGE: python HealthDataExtractor.py /path/to/datum.xml')
         sys.exit(1)
     data = HealthDataExtractor(sys.argv[1])
 
+
+
+# reference
+# http://pbpython.com/pandas-list-dict.html
+# https://chrisalbon.com/python/pandas_group_data_by_time.html
+# http://www.hydro.washington.edu/~nijssen/computing_workshops/workshop_datetime_pandas_20131112.html
