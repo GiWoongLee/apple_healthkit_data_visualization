@@ -5,10 +5,10 @@ class DataProcessor(object):
         self.showHourlyData()
 
     def __getitem__(self, item):
-        return self.rawData[item]
+        return self.dataBundle[item]
 
     def _processforHourlyData(self):
-        self.rawData = dict(
+        self.dataBundle = dict(
             map(lambda (key, value): (key, self._modifyRawData(key, value)), self.rawData.iteritems()))
 
     def _modifyRawData(self,key,value):
@@ -20,7 +20,7 @@ class DataProcessor(object):
 
     def showHourlyData(self):
         self._processforHourlyData()
-        print(self.rawData['stepCount'])
-        print(self.rawData['distanceWalking'])
-        print(self.rawData['stairsClimbing'])
+        # print(self.rawData['stepCount'])
+        # print(self.rawData['distanceWalking'])
+        # print(self.rawData['stairsClimbing'])
         # print(self.rawData['sleepAnalysis'])
