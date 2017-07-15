@@ -1,7 +1,7 @@
 from numpy import *
 from xml.etree import ElementTree
 from pandas import *
-import DataProcessor
+from DataProcessor import DataProcessor
 
 import re
 import sys
@@ -99,7 +99,6 @@ if __name__ == '__main__':
         print('USAGE: python HealthDataExtractor.py /path/to/datum.xml')
         sys.exit(1)
     dataBundle = HealthDataExtractor(sys.argv[1]).dataBundle
-    print(dataBundle['distanceWalking'])
     DataProcessor(dataBundle)
 
 
