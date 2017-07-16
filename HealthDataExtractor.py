@@ -45,9 +45,9 @@ class HealthDataExtractor(object):
 
     def _getDataLabel(self, data):
         return {
-            'stepCount': ['count', 'startDate', 'endDate'],
+            'stepCount': ['stepCount', 'startDate', 'endDate'],
             'distanceWalking': ['km', 'startDate', 'endDate'],
-            'stairsClimbing': ['count', 'startDate', 'endDate'],
+            'stairsClimbing': ['stairsCount', 'startDate', 'endDate'],
             'sleepAnalysis': ['startDate', 'endDate']
         }[data]
 
@@ -59,8 +59,10 @@ class HealthDataExtractor(object):
         if(key != 'sleepAnalysis'):
             if(key == 'distanceWalking'):
                 value['km'] = value['km'].astype('float64')
+            elif(key=='stepCount'):
+                value['stepCount'] = value['stepCount'].astype(int)
             else:
-                value['count'] = value['count'].astype(int)
+                value['stairsCount'] = value['stairsCount'].astype(int)
         value['startDate'] = to_datetime(value['startDate'])
         value['endDate'] = to_datetime(value['endDate'])
         return value

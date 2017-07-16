@@ -1,3 +1,5 @@
+from pandas import *
+
 class DataProcessor(object):
 
     def __init__(self,dataBundle):
@@ -14,13 +16,15 @@ class DataProcessor(object):
     def _modifyRawData(self,key,value):
         if(key!='sleepAnalysis'):
             value.index = value['startDate']
-            value = value.drop('startDate',1)
+            value = value.drop('startDate', 1)
             value = value.drop('endDate',1)
-            return value.resample('H').sum().fillna(0)
+            value = value.resample('H').sum().fillna(0)
+            value['timeSeries'] = Series(value.index.values,index=value.index.values)
+            return value
 
     def showHourlyData(self):
         self._processforHourlyData()
-        # print(self.rawData['stepCount'])
-        # print(self.rawData['distanceWalking'])
-        # print(self.rawData['stairsClimbing'])
+        # print(self.dataBundle['stepCount'])
+        # print(self.dataBundle['distanceWalking'])
+        # print(self.dataBundle['stairsClimbing'])
         # print(self.rawData['sleepAnalysis'])
