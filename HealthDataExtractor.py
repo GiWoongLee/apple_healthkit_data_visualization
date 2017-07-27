@@ -46,7 +46,7 @@ class HealthDataExtractor(object):
     def _getDataLabel(self, data):
         return {
             'stepCount': ['stepCount', 'startDate', 'endDate'],
-            'distanceWalking': ['km', 'startDate', 'endDate'],
+            'distanceWalking': ['distanceKM', 'startDate', 'endDate'],
             'stairsClimbing': ['stairsCount', 'startDate', 'endDate'],
             'sleepAnalysis': ['startDate', 'endDate']
         }[data]
@@ -54,11 +54,11 @@ class HealthDataExtractor(object):
     def _modifyMatrixDataType(self):
         self.dataBundle = dict(map(lambda (key, value): (key, self._modifyDataType(key, value)), self.dataBundle.iteritems()))
 
-    # convert count,km,count info to int type + startDate/endDate to datetime format
+    # convert count,distanceKM,count info to int type + startDate/endDate to datetime format
     def _modifyDataType(self,key,value):
         if(key != 'sleepAnalysis'):
             if(key == 'distanceWalking'):
-                value['km'] = value['km'].astype('float64')
+                value['distanceKM'] = value['distanceKM'].astype('float64')
             elif(key=='stepCount'):
                 value['stepCount'] = value['stepCount'].astype(int)
             else:
